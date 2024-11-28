@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import InsertNumbers from "./components/InsertNumbers.tsx";
+import GameOver from "./components/GameOver.tsx"; // Asegúrate de tener este componente para mostrar "GANASTE" o "PERDISTE"
 
-function App() {
+export default function App() {
+  const [gameOver, setGameOver] = useState(false);  // Definir el tipo de estado correctamente
+  const [gameResult, setGameResult] = useState("");   // Definir el tipo de estado correctamente
+
+  // Función que manejará el fin del juego
+  const handleGameOver = (result) => {
+    setGameOver(true);
+    setGameResult(result);
+  };
+
+  // Reiniciar el juego
+  const resetGame = () => {
+    setGameOver(false);
+    setGameResult("");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      {gameOver ? (
+        <div className="game-over-container">
+          <h1>{gameResult}</h1>
+          <button onClick={resetGame}>Volver a jugar</button>
+        </div>
+      ) : (
+        <InsertNumbers onGameOver={handleGameOver} />
+      )}
     </div>
   );
 }
-
-export default App;
